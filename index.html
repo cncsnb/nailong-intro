@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10110f">
+  <title>奶龙国际大学 · 欢迎</title>
+  <meta name="description" content="奶龙国际大学视频开场页">
+  <style>
+    :root { color-scheme: dark; font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #10110f; color: #fff; }
+    .stage { position: relative; width: 100%; min-height: 100vh; min-height: 100svh; overflow: hidden; display: grid; place-items: center; }
+    .ambient { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, #333528 0%, #181a13 35%, #10110f 70%); }
+    video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: transparent; }
+    .shade { position: absolute; inset: 0; background: linear-gradient(#0008, transparent 24%, transparent 75%, #0009); pointer-events: none; }
+    header { position: absolute; top: max(28px, env(safe-area-inset-top)); left: max(32px, env(safe-area-inset-left)); right: max(32px, env(safe-area-inset-right)); display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; gap: 12px; align-items: center; text-shadow: 0 1px 8px #000; }
+    .mark { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 12px; background: #f8db57; color: #232415; font-size: 20px; font-weight: 900; text-shadow: none; }
+    .name { font-size: 17px; font-weight: 600; letter-spacing: .08em; }
+    .tag { font-size: 10px; letter-spacing: .18em; color: #ccc; margin-top: 5px; }
+    button { font: inherit; cursor: pointer; color: inherit; }
+    button:focus-visible { outline: 3px solid #f8db57; outline-offset: 5px; }
+    .skip { min-width: 144px; min-height: 46px; padding: 10px 19px; border: 1px solid #ffffff50; border-radius: 24px; background: #10110fc9; backdrop-filter: blur(12px); font-size: 14px; display: flex; gap: 12px; justify-content: center; align-items: center; }
+    .skip:disabled { cursor: default; color: #ccc; }
+    .skip:not(:disabled) { background: #f8db57; color: #232415; border-color: #f8db57; }
+    .skip:not(:disabled):hover { background: #ffe97e; }
+    .message { position: relative; max-width: 420px; text-align: center; margin: 110px 24px; }
+    .eyebrow { margin: 0 0 18px; color: #f8db57; font-size: 12px; letter-spacing: .25em; }
+    h1 { margin: 0 0 16px; font-size: clamp(26px, 5vw, 42px); font-weight: 500; letter-spacing: .08em; }
+    .detail { margin: 0; color: #babbaf; font-size: 14px; line-height: 1.8; }
+    .play { margin-top: 24px; background: #f8db57; border: 0; color: #232415; border-radius: 24px; padding: 13px 25px; font-weight: 600; }
+    [hidden] { display: none !important; }
+    footer { position: absolute; bottom: max(28px, env(safe-area-inset-bottom)); left: max(32px, env(safe-area-inset-left)); right: max(32px, env(safe-area-inset-right)); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .sound { border: 1px solid #ffffff35; background: #10110fc9; border-radius: 24px; min-height: 42px; padding: 10px 17px; font-size: 13px; backdrop-filter: blur(12px); }
+    .destination { color: #d7d8cf; font-size: 12px; text-align: right; line-height: 1.7; text-shadow: 0 1px 5px #000; }
+    .destination span { color: #a8aaa0; font-size: 11px; }
+    noscript { position: absolute; z-index: 5; inset: 35% 20px auto; padding: 24px; background: #10110f; text-align: center; }
+    noscript a { color: #f8db57; }
+    @media (max-width: 600px) {
+      header { top: max(20px, env(safe-area-inset-top)); left: max(18px, env(safe-area-inset-left)); right: max(18px, env(safe-area-inset-right)); gap: 12px; }
+      .brand { gap: 9px; } .mark { width: 30px; height: 30px; font-size: 17px; border-radius: 10px; }
+      .name { font-size: 13px; letter-spacing: .03em; } .tag { font-size: 8px; letter-spacing: .1em; }
+      .skip { min-width: 116px; min-height: 40px; font-size: 12px; padding: 9px 12px; gap: 8px; }
+      footer { left: max(18px, env(safe-area-inset-left)); right: max(18px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); }
+      .destination { font-size: 11px; } .destination span { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <div class="ambient" aria-hidden="true"></div>
+    <video id="intro" autoplay muted playsinline preload="auto" aria-label="奶龙国际大学开场视频"></video>
+    <div class="shade" aria-hidden="true"></div>
+    <section id="message" class="message" aria-live="polite">
+      <p class="eyebrow">WELCOME</p>
+      <h1 id="messageTitle">精彩，即将开始</h1>
+      <p id="messageDetail" class="detail">正在加载开场视频…</p>
+      <button id="play" class="play" hidden>播放视频</button>
+    </section>
+    <header>
+      <div class="brand"><div class="mark" aria-hidden="true">奶</div><div><div class="name">奶龙国际大学</div><div class="tag">NAILONG INTERNATIONAL UNIVERSITY</div></div></div>
+      <button id="skip" class="skip" disabled aria-label="3 秒后可以跳过视频"><span id="skipLabel">3 秒后可跳过</span><span aria-hidden="true">↗</span></button>
+    </header>
+    <footer>
+      <button id="sound" class="sound" aria-pressed="false">开启声音</button>
+      <div class="destination">跳过后前往北师港浸大网站<br><span>bnbu.edu.cn</span></div>
+    </footer>
+    <noscript>请启用 JavaScript 播放视频并显示倒计时。<br><a href="https://www.bnbu.edu.cn/">前往北师港浸大网站</a></noscript>
+  </main>
+  <script>
+    // 将视频文件命名为 video.mp4，放在 index.html 旁边。
+    const VIDEO_URL = './video.mp4';
+    const REDIRECT_URL = 'https://www.bnbu.edu.cn/';
+    const SKIP_DELAY_MS = 3000;
+
+    const video = document.getElementById('intro');
+    const skip = document.getElementById('skip');
+    const skipLabel = document.getElementById('skipLabel');
+    const sound = document.getElementById('sound');
+    const message = document.getElementById('message');
+    const title = document.getElementById('messageTitle');
+    const detail = document.getElementById('messageDetail');
+    const play = document.getElementById('play');
+    const unlockAt = performance.now() + SKIP_DELAY_MS;
+
+    function updateCountdown() {
+      const remaining = Math.max(0, Math.ceil((unlockAt - performance.now()) / 1000));
+      skip.disabled = remaining > 0;
+      skipLabel.textContent = remaining ? `${remaining} 秒后可跳过` : '跳过视频';
+      skip.setAttribute('aria-label', remaining ? `${remaining} 秒后可以跳过视频` : '跳过视频，前往北师港浸大网站');
+      if (!remaining) clearInterval(countdown);
+    }
+    const countdown = setInterval(updateCountdown, 100);
+    updateCountdown();
+    document.addEventListener('visibilitychange', updateCountdown);
+    skip.addEventListener('click', () => {
+      if (performance.now() < unlockAt) return;
+      window.location.replace(REDIRECT_URL);
+    });
+
+    function showMessage(heading, text, canPlay) {
+      title.textContent = heading;
+      detail.textContent = text;
+      message.hidden = false;
+      play.hidden = !canPlay;
+    }
+    function syncSound() {
+      sound.textContent = video.muted ? '开启声音' : '关闭声音';
+      sound.setAttribute('aria-pressed', String(!video.muted));
+    }
+    async function startVideo() {
+      try {
+        await video.play();
+      } catch (error) {
+        if (video.error) return;
+        showMessage('点击，开始播放', '轻点下方按钮观看开场视频。', true);
+      }
+    }
+    video.addEventListener('playing', () => { message.hidden = true; });
+    video.addEventListener('volumechange', syncSound);
+    video.addEventListener('error', () => {
+      showMessage('视频暂时无法播放', '你仍可在 3 秒倒计时结束后，点击右上角跳过。', false);
+    });
+    video.addEventListener('ended', () => {
+      play.textContent = '再看一次';
+      showMessage('欢迎来到奶龙国际大学', '点击右上角“跳过视频”，前往北师港浸大网站。', true);
+    });
+    play.addEventListener('click', () => {
+      if (video.ended) video.currentTime = 0;
+      video.muted = false;
+      syncSound();
+      startVideo();
+    });
+    sound.addEventListener('click', () => {
+      video.muted = !video.muted;
+      syncSound();
+      if (video.paused && !video.ended && !video.error) startVideo();
+    });
+    video.muted = true;
+    video.src = VIDEO_URL;
+    startVideo();
+  </script>
+</body>
+</html>
