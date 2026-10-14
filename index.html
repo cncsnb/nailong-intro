@@ -45,10 +45,77 @@
       footer { left: max(18px, env(safe-area-inset-left)); right: max(18px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); }
       .destination { font-size: 11px; } .destination span { font-size: 10px; }
     }
+
+    /* Admission-card opening animation. */
+    body { background: #f3f1eb; }
+    .admission { --ink: #214f81; position: fixed; z-index: 20; inset: 0; overflow-y: auto; background: radial-gradient(ellipse at 50% 38%, #fffefa, #efede6); color: var(--ink); display: grid; place-items: center; padding: 24px; color-scheme: light; transition: opacity .38s ease, transform .38s ease; }
+    .admission.leaving { opacity: 0; transform: scale(1.025); pointer-events: none; }
+    .admission-card { position: relative; width: min(100%, 490px); padding: 29px 42px 30px; border: 1px solid #c9ccca; outline: 1px solid #e0dfd6; outline-offset: 9px; background: #fffefa; box-shadow: 0 14px 70px #2945600c; text-align: center; }
+    .admission-card::before, .admission-card::after { content: '✦'; position: absolute; top: -9px; color: #acb5b8; font-size: 18px; background: #f6f4ee; padding: 0 4px; }
+    .admission-card::before { left: -10px; } .admission-card::after { right: -10px; }
+    .admission-number { display: flex; justify-content: space-between; color: #8e9599; font-size: 9px; letter-spacing: .14em; margin: 0 0 12px; }
+    .admission-crest { width: 122px; height: 122px; display: block; margin: 0 auto 15px; }
+    .admission h1 { font-size: clamp(25px, 5.8vw, 34px); letter-spacing: .12em; font-weight: 800; margin: 0; line-height: 1.5; }
+    .admission-subtitle { margin: 7px 0 0; color: #92989c; letter-spacing: .5em; font-size: 13px; padding-left: .5em; }
+    .admission-rule { width: 58px; height: 2px; margin: 21px auto 8px; background: #c9ab4d; }
+    .admission-scene { position: relative; height: 235px; width: 100%; margin: 0 auto 15px; }
+    .admission-mascot { position: absolute; height: 100%; width: auto; left: 5px; bottom: 0; object-fit: contain; animation: escort-float 2.4s ease-in-out infinite; transform-origin: 50% 90%; }
+    .admission-stamp { position: absolute; right: 0; top: 25px; width: 106px; height: 106px; border: 2px solid #b54c40; outline: 1px solid #b54c40; outline-offset: -7px; border-radius: 50%; color: #b54c40; display: grid; place-content: center; font-size: 19px; font-weight: 800; letter-spacing: .16em; line-height: 1.6; transform: rotate(-13deg); animation: stamp-in .6s cubic-bezier(.2,.8,.2,1) both; }
+    .admission-stamp small { font-size: 7px; letter-spacing: .16em; font-weight: 500; margin-top: 4px; }
+    .admission-caption { color: #404b54; font-size: 17px; margin: 0 0 8px; letter-spacing: .04em; }
+    .admission-destination { font-size: 23px; font-weight: 800; margin: 0 0 24px; letter-spacing: .06em; }
+    .admission-track { height: 4px; background: #e2e6e8; border-radius: 5px; overflow: hidden; }
+    .admission-fill { height: 100%; width: 100%; background: var(--ink); border-radius: inherit; transform: scaleX(0); transform-origin: left; }
+    .admission-status { display: flex; justify-content: space-between; align-items: center; margin: 10px 0 22px; font-size: 11px; color: #8b9399; letter-spacing: .12em; }
+    .admission-time { font-variant-numeric: tabular-nums; letter-spacing: .06em; }
+    .admission-actions { display: flex; gap: 12px; }
+    .admission-actions button { flex: 1; border-radius: 28px; min-height: 46px; padding: 10px 8px; border: 1.5px solid var(--ink); font-size: 15px; letter-spacing: .1em; color: var(--ink); background: transparent; touch-action: none; }
+    .admission-actions .admission-go { color: #fff; background: var(--ink); }
+    .admission-actions button:hover { background: #edf1f5; } .admission-actions .admission-go:hover { background: #163c65; }
+    .admission-actions button:focus-visible { outline: 3px solid #c9ab4d; outline-offset: 4px; }
+    .admission-actions button[aria-pressed="true"] { background: #e2eaf1; }
+    .admission-note { color: #a0a4a6; font-size: 9px; margin: 17px 0 0; letter-spacing: .13em; }
+    @keyframes escort-float { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-7px) rotate(1deg); } }
+    @keyframes stamp-in { from { opacity: 0; transform: scale(1.35) rotate(-22deg); } to { opacity: 1; transform: scale(1) rotate(-13deg); } }
+    @media (max-width: 560px) { .admission { padding: 24px 25px; } .admission-card { padding: 24px 23px 25px; } .admission-number { font-size: 8px; } .admission-crest { width: 112px; height: 112px; } .admission-scene { height: 220px; } .admission-stamp { width: 97px; height: 97px; font-size: 17px; right: 0; } .admission-mascot { left: 0; } }
+    @media (max-height: 850px) { .admission { padding-top: 15px; padding-bottom: 15px; } .admission-card { padding-top: 16px; padding-bottom: 18px; } .admission-number { margin-bottom: 5px; } .admission-crest { width: 90px; height: 90px; margin-bottom: 8px; } .admission-rule { margin-top: 14px; } .admission-scene { height: 180px; margin-bottom: 10px; } .admission-stamp { width: 88px; height: 88px; font-size: 16px; } .admission-destination { margin-bottom: 16px; } .admission-status { margin-bottom: 15px; } .admission-note { margin-top: 12px; } }
+    @media (prefers-reduced-motion: reduce) { .admission { transition: none; } .admission-mascot, .admission-stamp { animation: none; } }
   </style>
 </head>
 <body>
-  <main class="stage">
+
+  <section id="admission" class="admission" aria-label="奶龙国际大学新生护送加载动画">
+    <div class="admission-card">
+      <p class="admission-number"><span>新生入学通行证</span><span>NO. NL·2026</span></p>
+      <svg class="admission-crest" viewBox="0 0 200 200" role="img" aria-label="奶龙国际大学校徽">
+        <defs><path id="crest-top" d="M 32,100 A 68,68 0 0,1 168,100"/><path id="crest-bottom" d="M 28,104 A 72,72 0 0,0 172,104"/></defs>
+        <circle cx="100" cy="100" r="96" fill="none" stroke="#214f81" stroke-width="2.4"/>
+        <circle cx="100" cy="100" r="85" fill="#214f81"/>
+        <circle cx="100" cy="100" r="81" fill="none" stroke="#fffefa" stroke-width=".8"/>
+        <circle cx="100" cy="100" r="57" fill="#fffefa"/>
+        <text fill="#fffefa" font-size="17" font-weight="700" letter-spacing="5"><textPath href="#crest-top" startOffset="50%" text-anchor="middle">奶龙国际大学</textPath></text>
+        <text fill="#fffefa" font-size="8.7" letter-spacing=".5"><textPath href="#crest-bottom" startOffset="50%" text-anchor="middle">NAILONG INTERNATIONAL UNIVERSITY</textPath></text>
+        <path d="M58 71 Q82 65 100 78 Q118 65 142 71 V124 Q117 123 100 140 Q83 123 58 124Z" fill="none" stroke="#214f81" stroke-width="3"/>
+        <path d="M100 78V130 M51 83V132Q81 133 100 147Q119 133 149 132V83" fill="none" stroke="#214f81" stroke-width="2"/>
+        <text x="100" y="115" text-anchor="middle" font-size="32" font-family="Georgia,serif" font-weight="bold" fill="#214f81">NL</text>
+        <path d="m100 47 2.5 5 5.5.8-4 3.8 1 5.5-5-2.6-5 2.6 1-5.5-4-3.8 5.5-.8Z" fill="#c9ab4d"/>
+      </svg>
+      <h1>奶龙国际大学</h1>
+      <p class="admission-subtitle">新生护送中心</p>
+      <div class="admission-rule" aria-hidden="true"></div>
+      <div class="admission-scene">
+        <img id="admissionMascot" class="admission-mascot" src="./nailong-mascot.png" alt="抱着双臂的奶龙" fetchpriority="high" width="1152" height="1344">
+        <div class="admission-stamp" aria-label="录取专用章"><span>录取<br>专用章</span><small>ADMITTED</small></div>
+      </div>
+      <p class="admission-caption">奶龙正在护送你前往</p>
+      <p class="admission-destination">奶龙国际大学</p>
+      <div id="admissionProgress" class="admission-track" role="progressbar" aria-label="护送进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="admissionFill" class="admission-fill"></div></div>
+      <div class="admission-status"><span id="admissionStatus">已录取 · 即将出发</span><span id="admissionTime" class="admission-time">10.0s</span></div>
+      <div class="admission-actions"><button id="admissionGo" class="admission-go">立即前往 ↗</button><button id="admissionHold" aria-pressed="false">按住不走</button></div>
+      <p class="admission-note">护送完成，即刻开启校园之旅</p>
+    </div>
+  </section>
+  <main id="videoStage" class="stage" hidden>
     <div class="ambient" aria-hidden="true"></div>
     <video id="intro" autoplay playsinline preload="auto" aria-label="奶龙国际大学开场视频"></video>
     <div class="shade" aria-hidden="true"></div>
@@ -68,7 +135,10 @@
     </footer>
     <noscript>请启用 JavaScript 播放视频并显示倒计时。<br><a href="https://www.bnbu.edu.cn/">前往北师港浸大网站</a></noscript>
   </main>
+  <noscript><style>.admission { display: none; } #videoStage[hidden] { display: grid !important; }</style></noscript>
   <script>
+    function beginVideoIntro() {
+      document.getElementById("videoStage").hidden = false;
     // 将视频文件命名为 video.mp4，放在 index.html 旁边。
     const VIDEO_URL = './video.mp4';
     const REDIRECT_URL = 'https://www.bnbu.edu.cn/';
@@ -151,6 +221,71 @@
     syncSound();
     video.src = VIDEO_URL;
     startVideo(true);
+    }
+
+    (() => {
+      const screen = document.getElementById('admission');
+      const fill = document.getElementById('admissionFill');
+      const progress = document.getElementById('admissionProgress');
+      const time = document.getElementById('admissionTime');
+      const status = document.getElementById('admissionStatus');
+      const go = document.getElementById('admissionGo');
+      const hold = document.getElementById('admissionHold');
+      const mascot = document.getElementById('admissionMascot');
+      const duration = 10000;
+      let elapsed = 0, previous = null, paused = false, leaving = false, started = false;
+      function enter() {
+        if (leaving) return;
+        leaving = true;
+        screen.classList.add('leaving');
+        beginVideoIntro();
+        document.getElementById('sound').focus({ preventScroll: true });
+        setTimeout(() => screen.remove(), 400);
+      }
+      function pause(value) {
+        if (leaving) return;
+        paused = value;
+        hold.setAttribute('aria-pressed', String(value));
+        hold.textContent = value ? '松手就出发' : '按住不走';
+        status.textContent = value ? '护送暂停 · 等你准备好' : '已录取 · 即将出发';
+      }
+      function tick(now) {
+        if (leaving) return;
+        if (previous !== null && !paused && !document.hidden) elapsed += Math.min(now - previous, 100);
+        previous = now;
+        const fraction = Math.min(1, elapsed / duration);
+        fill.style.transform = `scaleX(${fraction})`;
+        progress.setAttribute('aria-valuenow', String(Math.round(fraction * 100)));
+        time.textContent = `${Math.max(0, (duration - elapsed) / 1000).toFixed(1)}s`;
+        if (fraction >= 1 && !paused) enter();
+        else requestAnimationFrame(tick);
+      }
+      function start() {
+        if (started || leaving) return;
+        started = true;
+        requestAnimationFrame(tick);
+      }
+      go.addEventListener('click', enter);
+      hold.addEventListener('pointerdown', event => {
+        if (event.button !== 0) return;
+        hold.setPointerCapture(event.pointerId);
+        pause(true);
+      });
+      ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => hold.addEventListener(type, () => pause(false)));
+      hold.addEventListener('keydown', event => {
+        if (event.key === ' ' || event.key === 'Enter') { event.preventDefault(); pause(true); }
+      });
+      hold.addEventListener('keyup', event => {
+        if (event.key === ' ' || event.key === 'Enter') { event.preventDefault(); pause(false); }
+      });
+      hold.addEventListener('blur', () => pause(false));
+      window.addEventListener('blur', () => pause(false));
+      document.addEventListener('visibilitychange', () => { previous = null; pause(false); });
+      mascot.addEventListener('load', start, { once: true });
+      mascot.addEventListener('error', start, { once: true });
+      if (mascot.complete) start();
+      setTimeout(start, 1800);
+    })();
   </script>
 </body>
 </html>
