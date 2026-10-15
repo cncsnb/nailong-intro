@@ -79,7 +79,31 @@
     @keyframes stamp-in { from { opacity: 0; transform: scale(1.35) rotate(-22deg); } to { opacity: 1; transform: scale(1) rotate(-13deg); } }
     @media (max-width: 560px) { .admission { padding: 24px 25px; } .admission-card { padding: 24px 23px 25px; } .admission-number { font-size: 8px; } .admission-crest { width: 112px; height: 112px; } .admission-scene { height: 220px; } .admission-stamp { width: 97px; height: 97px; font-size: 17px; right: 0; } .admission-mascot { left: 0; } }
     @media (max-height: 850px) { .admission { padding-top: 15px; padding-bottom: 15px; } .admission-card { padding-top: 16px; padding-bottom: 18px; } .admission-number { margin-bottom: 5px; } .admission-crest { width: 90px; height: 90px; margin-bottom: 8px; } .admission-rule { margin-top: 14px; } .admission-scene { height: 180px; margin-bottom: 10px; } .admission-stamp { width: 88px; height: 88px; font-size: 16px; } .admission-destination { margin-bottom: 16px; } .admission-status { margin-bottom: 15px; } .admission-note { margin-top: 12px; } }
-    @media (prefers-reduced-motion: reduce) { .admission { transition: none; } .admission-mascot, .admission-stamp { animation: none; } }
+    /* Silky entrance choreography for the admission screen. */
+    @keyframes card-in { from { opacity: 0; transform: translateY(26px) scale(.982); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes rise-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes drift { 0%, 100% { background-position: 50% 36%; } 50% { background-position: 50% 48%; } }
+    @keyframes shimmer { from { transform: translateX(-110%); } to { transform: translateX(230%); } }
+    .admission { background-size: 135% 135%; animation: drift 9s ease-in-out infinite; }
+    .admission-card { animation: card-in .85s cubic-bezier(.22,.8,.24,1) both; }
+    .admission-card > * { animation: rise-in .65s cubic-bezier(.22,.8,.24,1) both; }
+    .admission-number { animation-delay: .08s; }
+    .admission-crest { animation-delay: .14s; }
+    .admission-card h1 { animation-delay: .22s; }
+    .admission-subtitle { animation-delay: .28s; }
+    .admission-rule { animation-delay: .33s; }
+    .admission-scene { animation-delay: .39s; }
+    .admission-caption { animation-delay: .47s; }
+    .admission-destination { animation-delay: .52s; }
+    .admission-track { animation-delay: .58s; }
+    .admission-status { animation-delay: .63s; }
+    .admission-actions { animation-delay: .69s; }
+    .admission-note { animation-delay: .75s; }
+    .admission-fill { position: relative; overflow: hidden; }
+    .admission-fill::after { content: ''; position: absolute; inset: 0; width: 45%; background: linear-gradient(100deg, transparent, #ffffff55, transparent); animation: shimmer 1.6s ease-in-out infinite; }
+    .admission { transition: opacity .42s cubic-bezier(.4,0,.2,1), transform .42s cubic-bezier(.4,0,.2,1), filter .42s ease; }
+    .admission.leaving { opacity: 0; transform: scale(1.03) translateY(-10px); filter: blur(3px); pointer-events: none; }
+    @media (prefers-reduced-motion: reduce) { .admission { transition: none; animation: none; } .admission-card, .admission-card > *, .admission-mascot, .admission-stamp, .admission-fill::after { animation: none; } }
   </style>
 </head>
 <body>
@@ -240,7 +264,7 @@
         screen.classList.add('leaving');
         beginVideoIntro();
         document.getElementById('sound').focus({ preventScroll: true });
-        setTimeout(() => screen.remove(), 400);
+        setTimeout(() => screen.remove(), 480);
       }
       function pause(value) {
         if (leaving) return;
